@@ -15,21 +15,23 @@ Feel free to use and edit as necessary for your use-case.
 
 ## Usage:
 
-Put it somewhere in your `$PATH` where you can summon it by name whenever you need it:
+`git clone https://github.com/phx/cvescan && cd cvescan`
+
+Put `cvescan` somewhere in your `$PATH` where you can summon it by name whenever you need it:
 
 `sudo mv cvescan /usr/local/bin/`
 
 First time usage:
 
-`cvescan`
+`sudo cvescan`
 
 Update the CVE databases:
 
-`cvescan -u`
+`sudo cvescan -u`
 
 Actually running a CVE scan:
 
-`cvescan google.com -p443`
+`sudo cvescan google.com -p443`
 
 (Yadda, yadda, will take all normal `nmap` arguments)
 
