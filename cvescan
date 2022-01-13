@@ -25,7 +25,6 @@ chmod +x updateFiles.sh
 ./updateFiles.sh > /dev/null 2>&1
 
 cd "$workdir" || exit 1
-set -x
 if echo "${@}" | grep -q '\-sV'; then
   nmap --script vulners,vulscan ${@}
 else
