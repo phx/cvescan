@@ -1,4 +1,4 @@
-# cvescan
+# CVEscan
 
 Dependencies:
 - `/bin/sh`
