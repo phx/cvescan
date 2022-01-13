@@ -1,0 +1,35 @@
+#!/bin/sh
+
+workdir="$PWD"
+
+# Make sure we're running as root:
+if [ "$(id -u)" != "0" ]; then
+  echo "$0 must be run as root or with 'sudo'"; exit 1
+fi
+
+# Check for dependencies:
+programs="nmap git"
+for program in $programs; do
+  if ! command -v "$program" >/dev/null 2>&1; then
+    echo "$program must already be installed to run this script"; exit 1
+  fi
+done
+
+# Make sure vulscan is installed and updated:
+cd /usr/share/nmap/scripts || exit 1
+if [ ! -d vulscan ]; then
+  git clone https://github.com/scipag/vulscan.git
+fi
+cd vulscan/utilities/updater || exit 1
+chmod +x updateFiles.sh
+./updateFiles.sh > /dev/null 2>&1
+
+cd "$workdir" || exit 1
+set -x
+if echo "${@}" | grep -q '\-sV'; then
+  nmap --script vulners,vulscan ${@}
+else
+  nmap --script vulners,vulscan -sV ${@}
+fi
+
+
