@@ -26,7 +26,12 @@ for program in $programs; do
 done
 
 workdir="$PWD"
-cd /usr/share/nmap/scripts || exit 1
+if uname -a | grep -qi darwin; then
+  nmapdir="/usr/local/share/nmap/scripts"
+else
+  nmapdir="/usr/share/nmap/scripts"
+fi
+cd "$nmapdir" || exit 1
 
 # Make sure vulscan is installed and updated:
 if [ ! -d vulscan ]; then
