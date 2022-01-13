@@ -19,10 +19,18 @@ done
 cd /usr/share/nmap/scripts || exit 1
 if [ ! -d vulscan ]; then
   git clone https://github.com/scipag/vulscan.git
+  cd vulscan/utilities/updater || exit 1
+  chmod +x updateFiles.sh
+  ./updateFiles.sh
 fi
-cd vulscan/utilities/updater || exit 1
-chmod +x updateFiles.sh
-./updateFiles.sh > /dev/null 2>&1
+
+# Options for updating vulscan databases:
+if [ "$1" = "-u" -o "$1" = "--update"]; then
+  cd vulscan/utilities/updater || exit 1
+  chmod +x updateFiles.sh
+  ./updateFiles.sh
+  exit $?
+fi
 
 cd "$workdir" || exit 1
 if echo "${@}" | grep -q '\-sV'; then
