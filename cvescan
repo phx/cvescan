@@ -1,6 +1,16 @@
 #!/bin/sh
 
-workdir="$PWD"
+usage() {
+  echo '
+- Run without arguments to install.
+- Run with -u or --update to update vulscan databases.
+- Run with any other nmap arguments to run CVE scans.
+'
+}
+
+if [ "$1" = "-h" -o "$1" = "--help" ]; then
+  usage; exit 0
+fi
 
 # Make sure we're running as root:
 if [ "$(id -u)" != "0" ]; then
@@ -15,28 +25,33 @@ for program in $programs; do
   fi
 done
 
-# Make sure vulscan is installed and updated:
+workdir="$PWD"
 cd /usr/share/nmap/scripts || exit 1
+
+# Make sure vulscan is installed and updated:
 if [ ! -d vulscan ]; then
   git clone https://github.com/scipag/vulscan.git
   cd vulscan/utilities/updater || exit 1
   chmod +x updateFiles.sh
   ./updateFiles.sh
+  echo "Next time, run $0 with normal nmap arguments to do a CVE scan"
+  exit
 fi
 
 # Options for updating vulscan databases:
 if [ "$1" = "-u" -o "$1" = "--update"]; then
   cd vulscan/utilities/updater || exit 1
-  chmod +x updateFiles.sh
   ./updateFiles.sh
   exit $?
-fi
-
-cd "$workdir" || exit 1
-if echo "${@}" | grep -q '\-sV'; then
-  nmap --script vulners,vulscan ${@}
+elif [ "$1" ]; then
+  cd "$workdir" || exit 1
+  if echo "${@}" | grep -q '\-sV'; then
+    nmap --script vulners,vulscan ${@}
+  else
+    nmap --script vulners,vulscan -sV ${@}
+  fi
 else
-  nmap --script vulners,vulscan -sV ${@}
+  usage; exit 1
 fi
 
 
