@@ -15,6 +15,36 @@ Feel free to use and edit as necessary for your use-case.
 
 ## Usage:
 
+```
+Usage: cvescan [options]
+
+Options:
+[no arguments - first run]	initial install/update of CVE databases and exit.
+
+-h | --help			display this help text.
+-u | --update			update CVE databases and exit.
+-1 | --vulners [nmap arguments]	nmap scan using ONLY vulners NSE script.
+-2 | --vulscan [nmap arguments] nmap scan using ONLY vulscan NSE script.
+-3 | --all [nmap arguments]	nmap scan using BOTH vulners AND vulscan. (optional)
+
+[nmap arguments]		Same as running with '-3' or '--all'.
+				Default functionality is to use BOTH vulners AND vulscan.
+
+The following additional arguments can be added when using '-2', '--vulscan', '-3', '--all',
+(or default nmap arguments) in order to only use specific vulscan databases to return results:
+
+--script-args vulscandb=cve.csv
+--script-args vulscandb=exploitdb.csv
+--script-args vulscandb=openvas.csv
+--script-args vulscandb=osvdb.csv
+--script-args vulscandb=scipvuldb.csv
+--script-args vulscandb=securityfocus.csv
+--script-args vulscandb=securitytracker.csv
+--script-args vulscandb=xforce.csv
+```
+
+## Example Usage:
+
 `git clone https://github.com/phx/cvescan && cd cvescan`
 
 Put `cvescan` somewhere in your `$PATH` where you can summon it by name whenever you need it:
