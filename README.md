@@ -1,5 +1,10 @@
 # cvescan
 
+Dependencies:
+- `/bin/sh`
+- `nmap`
+- `git`
+
 This program makes sure you have all the pre-requisites ready to scan for CVEs using `nmap`.
 Once the NSE scripts are in place, we do a full CVE scan using `nmap` under the hood, so all normal `nmap` options are available.
 
