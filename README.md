@@ -21,7 +21,7 @@ Usage: cvescan [options]
 Options:
 [no arguments - first run]	initial install/update of CVE databases and exit.
 
--h | --help			display this help text.
+-h | --help			display this help text and exit.
 -u | --update			update CVE databases and exit.
 -1 | --vulners [nmap arguments]	nmap scan using ONLY vulners NSE script.
 -2 | --vulscan [nmap arguments] nmap scan using ONLY vulscan NSE script.
