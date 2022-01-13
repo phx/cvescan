@@ -8,7 +8,7 @@ usage() {
 '
 }
 
-if [ "$1" = "-h" -o "$1" = "--help" ]; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
   usage; exit 0
 fi
 
@@ -39,7 +39,7 @@ if [ ! -d vulscan ]; then
 fi
 
 # Options for updating vulscan databases:
-if [ "$1" = "-u" -o "$1" = "--update" ]; then
+if [ "$1" = "-u" ] || [ "$1" = "--update" ]; then
   cd vulscan/utilities/updater || exit 1
   ./updateFiles.sh
   exit $?
