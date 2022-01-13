@@ -51,9 +51,9 @@ if [ "$1" = "-u" ] || [ "$1" = "--update" ]; then
 elif [ "$1" ]; then
   cd "$workdir" || exit 1
   if echo "${@}" | grep -q '\-sV'; then
-    nmap --script vulners,vulscan ${@}
+    nmap --script vulners,vulscan/vulscan ${@}
   else
-    nmap --script vulners,vulscan -sV ${@}
+    nmap --script vulners,vulscan/vulscan -sV ${@}
   fi
 else
   usage; exit 1
